@@ -56,7 +56,7 @@ color: white
 -- component presentation:
 children wrap:
 integer $current-slide:
-integer max: 5
+integer max: 12
 integer min: 1
 boolean adjust-position: false
 boolean $mouse-in-left: false
@@ -80,7 +80,7 @@ $on-global-key[esc]$: $ftd.set-bool($a = $presentation.show-full-screen, v = fal
 -- ftd.row:
 if: { ftd.device != "mobile" }
 width: fill-container
-padding-horizontal.px: 12
+height: fill-container
 align-content: center
 min-height.fixed.px: 400
 min-height.fixed.percent if { presentation.show-full-screen }: 92
@@ -99,7 +99,7 @@ width: fill-container
 height: fill-container
 align-content: center
 align-self: center
-padding-horizontal.px: 12
+;;padding-horizontal.px: 12
 z-index: 0
 
 -- end: ftd.column
@@ -191,7 +191,6 @@ cursor: pointer
 
 -- end: ftd.row
 
-
 -- end: ftd.column
 
 -- end: presentation
@@ -209,13 +208,17 @@ optional integer index:
 optional integer reset:
 children slides:
 integer $current-slide:
-integer max: 5
+integer max: 12
 integer min: 1
 boolean $mouse-in-right: false
+optional ftd.background-image bg-img:
 
 -- ftd.column:
 if: { slide.index == slide.reset }
+background.image if { slide.bg-img != NULL }: $slide.bg-img
 width: fill-container
+height: fill-container
+min-height.fixed.px: 400
 children: $slide.slides
 align-content: center
 $on-click$: $increment-and-clamp($a = $slide.current-slide, by = 1, min = $slide.min, max = $slide.max)
@@ -238,7 +241,7 @@ $on-mouse-leave$: $ftd.set-bool($a = $slide.mouse-in-right, v = false)
 integer $a:
 integer by: 1
 integer min: 0
-integer max: 5
+integer max: 12
 
 
 a = (((a - min) + by) % ((max+1)- min)) + min
@@ -251,7 +254,7 @@ a = (((a - min) + by) % ((max+1)- min)) + min
 integer $a:
 integer by: 1
 integer min: 0
-integer max: 5
+integer max: 12
 
 
 a = (((a - min) - by) % ((max+1)- min)) + min
