@@ -8,7 +8,6 @@ favicon: /-/gsalunke.github.io/slides/favicon.ico
 -- fastn.dependency: fastn-community.github.io/roboto-typography
 -- fastn.dependency: fastn-community.github.io/dark-flame-cs
 
--- fastn.auto-import: gsalunke.github.io/slides/FASTN/ds
 -- fastn.auto-import: gsalunke.github.io/slides/assets
 -- fastn.auto-import: fastn-community.github.io/site-doc
 -- fastn.auto-import: fastn-community.github.io/code-block as cb
