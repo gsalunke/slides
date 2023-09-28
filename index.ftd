@@ -80,6 +80,7 @@ width: fill-container
 padding-horizontal.px: 12
 align-content: center
 min-height.fixed.px: 400
+min-height.fixed.percent if { presentation.show-full-screen }: 92
 
 -- ftd.column:
 if: { presentation.current-slide == presentation.min && presentation.current-slide != presentation.max }
