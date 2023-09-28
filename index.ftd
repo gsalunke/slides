@@ -1,40 +1,239 @@
--- ds.page: Welcome to doc-site
+-- integer $active-slide: 1
+
+-- site-doc.doc-home: fastn package: Slides
+license-url: https://github.com/gsalunke/slides/blob/main/LICENSE
+current-package: gsalunke.github.io/slides
+show-tabs: false
+site-title: Slides
+github-url: https://github.com/gsalunke/slides
+
+-- site-doc.output:
+colors: $ftd.default-colors
+
+-- presentation:
+$current-slide: $active-slide
+max: 3
+
+-- slide:
+index: 1
+reset: $active-slide
+
+-- ftd.text: I am first slide
+color: white
+
+-- end: slide
+
+-- slide:
+index: 2
+reset: $active-slide
+
+-- ftd.text: I am second slide
+color: white
+
+-- end: slide
+
+-- slide:
+index: 3
+reset: $active-slide
+
+-- ftd.text: I am third slide
+color: white
+
+-- end: slide
+
+-- end: presentation
+
+-- end: site-doc.output
+
+-- end: site-doc.doc-home
 
 
-⚡️ `doc-site` will help you create a beautiful documentation site in no time.
-
-It provides out-of-the-box documentation features that can be used to create any
-kind of site(personal website, blog, etc).
-
-[Click here](https://fastn-community.github.io/doc-site/) to read doc-site
-documentation.
-
--- ds.h3: 🚀 Fast Track 
-
-Create your first fastn [web-site](https://fastn.com/expander/hello-world/-/build/) 
-project in just 5 minutes!
-
--- ds.h3: 🌟 Whats next?
-
-Create your first page. 
-[Click here to know more](https://fastn-community.github.io/doc-site/components/page/).
-
--- ds.h3: 👀 Want to learn more?
-
-Feel free to check [our expander course](https://fastn.com/expander/) or jump
-into our [FifthTry Discord server](https://discord.gg/bucrdvptYd).
 
 
--- ds.h3: 🎯 Used by?
+-- component presentation:
+children wrap:
+integer $current-slide:
+integer max: 5
+integer min: 1
+boolean adjust-position: false
+boolean $mouse-in-left: false
+boolean $mouse-in-right: false
+boolean $mouse-in-full: false
 
-Our all documentation sites uses this `doc-site` theme.
+-- ftd.column:
+width: fill-container
+background.solid: $inherited.colors.background.step-1
+align-content: center
+height.fixed.percent: 100
+min-height.fixed.px: 400
 
-- [fastn.com](https://fastn.com/home/)
-- [FifthTry.com](https://www.fifthtry.com/)
+-- ftd.row:
+if: { ftd.device != "mobile" }
+width: fill-container
+padding-horizontal.px: 12
+align-content: center
+min-height.fixed.px: 400
 
--- ds.h2: Learn fastn and become a pro?
+-- ftd.column:
+if: { presentation.current-slide == presentation.min && presentation.current-slide != presentation.max }
+anchor: parent
+$on-global-key[left]$: $decrement-and-clamp($a = $presentation.current-slide, by = 1, min = $presentation.min, max = $presentation.max)
+$on-global-key[right]$: $increment-and-clamp($a = $presentation.current-slide, by = 1, min = $presentation.min, max = $presentation.max)
 
-You are one click away, just check [our documentation](https://fastn.com/) and 
-dont forget to jump into our [FifthTry Discord server](https://discord.gg/bucrdvptYd).
+-- end: ftd.column
 
--- end: ds.page
+-- ftd.column:
+children: $presentation.wrap
+width: fill-container
+align-content: center
+padding-horizontal.px: 12
+z-index: 0
+
+-- end: ftd.column
+
+-- end: ftd.row
+
+-- ftd.column:
+if: { ftd.device == "mobile"}
+children: $presentation.wrap
+width: fill-container
+padding-horizontal.px: 12
+padding-vertical.px: 2
+z-index: 0
+height: fill-container
+
+-- end: ftd.column
+
+-- ftd.row:
+width: fill-container
+background.solid: $inherited.colors.background.step-2
+align-content: center
+padding-vertical.px: 12
+
+-- ftd.column:
+width: fill-container
+align-content: center
+
+-- ftd.row:
+
+-- ftd.image:
+if: { presentation.current-slide != presentation.min }
+src: $assets.files.assets.left.svg
+src if { presentation.mouse-in-left }: $assets.files.assets.left-active.svg
+$on-click$: $decrement-and-clamp($a = $presentation.current-slide, by = 1, min = $presentation.min, max = $presentation.max)
+align-self: center
+width.fixed.px: 24
+height.fixed.px: 24
+$on-mouse-enter$: $ftd.set-bool($a = $presentation.mouse-in-left, v = true)
+$on-mouse-leave$: $ftd.set-bool($a = $presentation.mouse-in-left, v = false)
+
+-- ftd.image:
+if: { presentation.current-slide == presentation.min }
+src: $assets.files.assets.left.svg
+align-self: center
+width.fixed.px: 24
+height.fixed.px: 24
+
+-- ftd.integer: $presentation.current-slide
+color: $inherited.colors.text-strong
+role: $inherited.types.button-small
+style: medium
+padding-horizontal.px: 16 
+
+-- ftd.image:
+if: { presentation.current-slide != presentation.max }
+src: $assets.files.assets.right.svg
+src if { presentation.mouse-in-right }: $assets.files.assets.right-active.svg
+$on-click$: $increment-and-clamp($a = $presentation.current-slide, by = 1, min = $presentation.min, max = $presentation.max)
+align-self: center
+border-radius.px: 100
+width.fixed.px: 24
+height.fixed.px: 24
+$on-mouse-enter$: $ftd.set-bool($a = $presentation.mouse-in-right, v = true)
+$on-mouse-leave$: $ftd.set-bool($a = $presentation.mouse-in-right, v = false)
+
+-- ftd.image:
+if: { presentation.current-slide == presentation.max }
+src: $assets.files.assets.right.svg
+align-self: center
+border-radius.px: 100
+width.fixed.px: 24
+height.fixed.px: 24
+
+-- end: ftd.row
+
+-- end: ftd.column
+
+-- ftd.column:
+
+-- ftd.image:
+src: $assets.files.assets.full-screen.svg
+src if { presentation.mouse-in-full } : $assets.files.assets.full-screen-active.svg
+;;$on-click$: $show-full-screen = true
+;;$on-global-key[ctrl-f]$: $show-full-screen = true
+$on-mouse-enter$: $ftd.set-bool($a = $presentation.mouse-in-full, v = true)
+$on-mouse-leave$: $ftd.set-bool($a = $presentation.mouse-in-full, v = false)
+cursor: pointer
+
+-- end: ftd.column
+
+-- end: ftd.row
+
+
+-- end: ftd.column
+
+-- end: presentation
+
+
+
+
+
+
+
+
+
+-- component slide:
+optional integer index:
+optional integer reset:
+children slides:
+
+-- ftd.column:
+if: { slide.index == slide.reset }
+width: fill-container
+height.fixed.calc: 100%
+children: $slide.slides
+align-content: center
+
+-- end: ftd.column
+
+-- end: slide
+
+
+
+
+
+
+
+
+
+-- void increment-and-clamp(a,by,min,max):
+integer $a:
+integer by: 1
+integer min: 0
+integer max: 5
+
+
+a = (((a - min) + by) % ((max+1)- min)) + min
+
+
+
+
+
+-- void decrement-and-clamp(a,by,min,max):
+integer $a:
+integer by: 1
+integer min: 0
+integer max: 5
+
+
+a = (((a - min) - by) % ((max+1)- min)) + min
