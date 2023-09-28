@@ -15,6 +15,7 @@ $current-slide: $active-slide
 max: 3
 
 -- slide:
+$current-slide: $active-slide
 index: 1
 reset: $active-slide
 
@@ -24,6 +25,7 @@ color: white
 -- end: slide
 
 -- slide:
+$current-slide: $active-slide
 index: 2
 reset: $active-slide
 
@@ -33,6 +35,7 @@ color: white
 -- end: slide
 
 -- slide:
+$current-slide: $active-slide
 index: 3
 reset: $active-slide
 
@@ -93,7 +96,9 @@ $on-global-key[right]$: $increment-and-clamp($a = $presentation.current-slide, b
 -- ftd.column:
 children: $presentation.wrap
 width: fill-container
+height: fill-container
 align-content: center
+align-self: center
 padding-horizontal.px: 12
 z-index: 0
 
@@ -203,13 +208,19 @@ cursor: pointer
 optional integer index:
 optional integer reset:
 children slides:
+integer $current-slide:
+integer max: 5
+integer min: 1
+boolean $mouse-in-right: false
 
 -- ftd.column:
 if: { slide.index == slide.reset }
 width: fill-container
-height.fixed.calc: 100%
 children: $slide.slides
 align-content: center
+$on-click$: $increment-and-clamp($a = $slide.current-slide, by = 1, min = $slide.min, max = $slide.max)
+$on-mouse-enter$: $ftd.set-bool($a = $slide.mouse-in-right, v = true)
+$on-mouse-leave$: $ftd.set-bool($a = $slide.mouse-in-right, v = false)
 
 -- end: ftd.column
 
